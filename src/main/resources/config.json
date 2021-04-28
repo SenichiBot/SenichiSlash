@@ -1,0 +1,6 @@
+{
+  "app_id": "your app id here",
+  "public_key": "your app public key here",
+  "bot_token": "your bot token",
+  "port": 80
+}
