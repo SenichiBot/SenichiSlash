@@ -1,5 +1,6 @@
 package me.hechfx.interaktions
 
+import dev.kord.common.entity.Snowflake
 import me.hechfx.interaktions.command.misc.*
 import me.hechfx.interaktions.command.util.*
 import me.hechfx.interaktions.config.Configuration
@@ -25,6 +26,10 @@ class Senichi(private val config: Configuration) {
         interactions.commandManager.register(
             MinecraftServerCommand,
             MinecraftServerExecutor()
+        )
+        interactions.commandManager.register(
+            PokedexCommand,
+            PokedexExecutor()
         )
 
         interactions.commandManager.updateAllGlobalCommands(true)

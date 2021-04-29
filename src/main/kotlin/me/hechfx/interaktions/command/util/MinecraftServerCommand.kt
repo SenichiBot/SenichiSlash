@@ -1,6 +1,5 @@
 package me.hechfx.interaktions.command.util
 
-import com.fasterxml.jackson.core.JsonFactory
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
@@ -53,9 +52,9 @@ class MinecraftServerExecutor : SlashCommandExecutor() {
             context.reply("O servidor está offline ou não existe!", onlineEmote)
         } else {
             val replies = listOf(
-                context.buildReply("IP: ${args[options.ip]}", onlineEmote),
-                context.buildReply("Players: ${players["online"]}/${players["max"]}"),
-                context.buildReply("Versions: ${versions["name"]}")
+                context.buildReply("**IP:** ${args[options.ip]}", onlineEmote),
+                context.buildReply("**Players:** ${players["online"]}/${players["max"]}"),
+                context.buildReply("**Versions:** ${versions["name"].asText()}")
             )
 
             context.sendMessage {

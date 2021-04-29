@@ -1,11 +1,15 @@
 package me.hechfx.interaktions.command.misc
 
+import dev.kord.common.entity.optional.optional
+import me.hechfx.interaktions.command.misc.PingExecutor.Companion.Option.register
+import me.hechfx.interaktions.util.MessageUtil.buildReply
 import me.hechfx.interaktions.util.MessageUtil.reply
 import net.perfectdreams.discordinteraktions.commands.SlashCommandArguments
 import net.perfectdreams.discordinteraktions.commands.SlashCommandExecutor
 import net.perfectdreams.discordinteraktions.context.SlashCommandContext
 import net.perfectdreams.discordinteraktions.declarations.slash.SlashCommandDeclaration
 import net.perfectdreams.discordinteraktions.declarations.slash.SlashCommandExecutorDeclaration
+import net.perfectdreams.discordinteraktions.declarations.slash.options.CommandOptions
 import net.perfectdreams.discordinteraktions.declarations.slash.slashCommand
 
 object PongCommand : SlashCommandDeclaration {
@@ -16,9 +20,22 @@ object PongCommand : SlashCommandDeclaration {
 }
 
 class PongExecutor : SlashCommandExecutor() {
-    companion object : SlashCommandExecutorDeclaration(PongExecutor::class)
+    companion object : SlashCommandExecutorDeclaration(PongExecutor::class) {
+        override val options = Option
+
+        object Option : CommandOptions() {
+            val ephemeral = boolean("ephemeral", "send the message as ephemeral")
+                .register() // Don't forget to register!
+        }
+    }
 
     override suspend fun execute(context: SlashCommandContext, args: SlashCommandArguments) {
-        context.reply("ping!")
+        if (args[options.ephemeral]) {
+            context.sendEphemeralMessage {
+                content = context.buildReply("ping!")
+            }
+        } else {
+            context.reply("ping!")
+        }
     }
 }
