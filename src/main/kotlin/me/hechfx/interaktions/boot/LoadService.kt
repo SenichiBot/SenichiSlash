@@ -10,18 +10,20 @@ import java.io.File
 
 object LoadService {
     lateinit var senichi: Senichi
-    val configFile = File("./config.json")
-    val configAsString = String(configFile.readBytes())
-    val config = Json {}.decodeFromString<Configuration>(configAsString)
 
     @JvmStatic
     fun main(args: Array<String>) {
-        senichi = Senichi(config)
+
+        val configFile = File("./config.json")
 
         if (!configFile.exists()) {
-            copyFromJar("/config.json", "./config.json")
+            copyFromJar("/config.json", "./config.json", this)
             throw Exception("I've not find a configuration file, i'm creating one for you!\n\nWhen you finish to write the configurations, run me again!")
         }
+
+        val configAsString = String(configFile.readBytes())
+        val config = Json {}.decodeFromString<Configuration>(configAsString)
+        senichi = Senichi(config)
 
         runBlocking {
             senichi.start()

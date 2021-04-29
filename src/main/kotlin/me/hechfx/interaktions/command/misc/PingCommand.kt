@@ -1,5 +1,6 @@
 package me.hechfx.interaktions.command.misc
 
+import me.hechfx.interaktions.util.MessageUtil.reply
 import net.perfectdreams.discordinteraktions.commands.SlashCommandArguments
 import net.perfectdreams.discordinteraktions.commands.SlashCommandExecutor
 import net.perfectdreams.discordinteraktions.context.SlashCommandContext
@@ -18,8 +19,6 @@ class PingExecutor : SlashCommandExecutor() {
     companion object : SlashCommandExecutorDeclaration(PingExecutor::class)
 
     override suspend fun execute(context: SlashCommandContext, args: SlashCommandArguments) {
-        context.sendMessage {
-            content = "pong!"
-        }
+        context.reply("pong!")
     }
 }

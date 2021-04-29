@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "1.4.30"
     kotlin("plugin.serialization") version "1.4.30"
+    id("com.github.johnrengelman.shadow") version "5.2.0"
 }
 
 group = "me.hechfx"
@@ -16,23 +17,17 @@ repositories {
 dependencies {
     implementation("net.perfectdreams.discordinteraktions:core:0.0.4-SNAPSHOT")
     implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.1.0")
-}
-
-val fatJar = task("fatJar", type = Jar::class) {
-    println("Building fat jar for ${project.name}...")
-    baseName = "${project.name}-fat"
-    manifest {
-        attributes["Main-Class"] = "me.hechfx.interaktions.boot.LoadService"
-    }
-    from(configurations.runtimeClasspath.get().map { if (it.isDirectory) it else zipTree(it) })
-    with(tasks["jar"] as CopySpec)
+    implementation("com.squareup.okhttp:okhttp:2.5.0")
+    implementation("com.fasterxml.jackson.core:jackson-databind:2.9.9")
 }
 
 tasks {
     compileKotlin {
         kotlinOptions.jvmTarget = "1.8"
     }
-    "build" {
-        dependsOn(fatJar)
+    shadowJar {
+        manifest {
+            attributes["Main-Class"] = "me.hechfx.interaktions.boot.LoadService"
+        }
     }
 }
