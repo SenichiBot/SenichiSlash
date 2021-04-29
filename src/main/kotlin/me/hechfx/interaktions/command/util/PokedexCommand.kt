@@ -1,8 +1,8 @@
 package me.hechfx.interaktions.command.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
+import me.hechfx.interaktions.util.HttpUtil.httpClient
 import me.hechfx.interaktions.util.MessageUtil.buildReply
 import net.perfectdreams.discordinteraktions.commands.SlashCommandArguments
 import net.perfectdreams.discordinteraktions.commands.SlashCommandExecutor
@@ -30,12 +30,11 @@ class PokedexExecutor : SlashCommandExecutor() {
     }
 
     override suspend fun execute(context: SlashCommandContext, args: SlashCommandArguments) {
-        val client = OkHttpClient()
         val request = Request.Builder()
             .url("https://some-random-api.ml/pokedex?pokemon=${args[options.pokemon]}")
             .get()
             .build()
-        val call = client.newCall(request).execute()
+        val call = httpClient.newCall(request).execute()
         val objMapper = ObjectMapper()
         val json = objMapper.readTree(call.body().string())
 

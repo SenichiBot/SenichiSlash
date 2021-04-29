@@ -1,6 +1,5 @@
 package me.hechfx.interaktions.util
 
-import me.hechfx.interaktions.boot.LoadService
 import java.io.File
 
 object JarUtil {

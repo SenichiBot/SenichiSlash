@@ -1,7 +1,5 @@
 package me.hechfx.interaktions.command.misc
 
-import dev.kord.common.entity.optional.optional
-import me.hechfx.interaktions.command.misc.PingExecutor.Companion.Option.register
 import me.hechfx.interaktions.util.MessageUtil.buildReply
 import me.hechfx.interaktions.util.MessageUtil.reply
 import net.perfectdreams.discordinteraktions.commands.SlashCommandArguments

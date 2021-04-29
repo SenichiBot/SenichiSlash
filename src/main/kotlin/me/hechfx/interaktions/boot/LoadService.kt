@@ -23,8 +23,8 @@ object LoadService {
 
         val configAsString = String(configFile.readBytes())
         val config = Json {}.decodeFromString<Configuration>(configAsString)
-        senichi = Senichi(config)
 
+        senichi = Senichi(config)
         runBlocking {
             senichi.start()
         }

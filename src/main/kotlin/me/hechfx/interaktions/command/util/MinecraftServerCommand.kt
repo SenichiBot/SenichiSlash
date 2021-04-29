@@ -1,8 +1,8 @@
 package me.hechfx.interaktions.command.util
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.squareup.okhttp.OkHttpClient
 import com.squareup.okhttp.Request
+import me.hechfx.interaktions.util.HttpUtil.httpClient
 import me.hechfx.interaktions.util.MessageUtil.buildReply
 import me.hechfx.interaktions.util.MessageUtil.reply
 import net.perfectdreams.discordinteraktions.commands.SlashCommandArguments
@@ -31,13 +31,12 @@ class MinecraftServerExecutor : SlashCommandExecutor() {
     }
 
     override suspend fun execute(context: SlashCommandContext, args: SlashCommandArguments) {
-        val client = OkHttpClient()
 
         val request = Request.Builder()
             .url("https://eu.mc-api.net/v3/server/ping/${args[options.ip]}")
             .get()
             .build()
-        val call = client.newCall(request).execute()
+        val call = httpClient.newCall(request).execute()
         val objMapper = ObjectMapper()
         val json = objMapper.readTree(call.body().string())
         val players = json["players"]
